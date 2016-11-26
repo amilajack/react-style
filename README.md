@@ -14,29 +14,28 @@ React Style is an approach for styling [React][] components. It uses the same
 syntax as `StyleSheet.create` from [React Native][].
 
 Define styles using full power of JavaScript:
+```js
+import StyleSheet from 'react-style'
 
-    var StyleSheet = require('react-style')
-
-    var styles = StyleSheet.create({
-        foo: {
-          color: 'red',
-          backgroundColor: 'white'
-        }
-    })
-
-Style React components:
-
-    var React = require('react')
-
-    class HelloWorld extends React.Component{
-
-      render() {
-        var dynamicStyles = {color: this.props.color}
-        return <div styles={[styles.foo, dynamicStyles]}>Hello, world!</div>
-      }
-
+const styles = StyleSheet.create({
+    foo: {
+      color: 'red',
+      backgroundColor: 'white'
     }
+})
+```
+Style React components:
+```js
+import React from 'react'
 
+class HelloWorld extends React.Component{
+
+  render() {
+    const dynamicStyles = {color: this.props.color}
+    return <div styles={[styles.foo, dynamicStyles]}>Hello, world!</div>
+  }
+}
+```
 Notice that the property is `styles`, not `style`. By default styles are applied to the DOM as inline styles.
 
 
@@ -52,37 +51,37 @@ Generated CSS class names are descriptive by default and minimized when using
 
 To make sure that the order of the `styles` property is maintained, React Style
 uses a CSS overrides hack which results in the above example results in:
-
-    .foo,.foo.foo1,.foo.foo1.foo2. (etc.)
-
+```
+.foo,.foo.foo1,.foo.foo1.foo2. (etc.)
+```
 By default an amount of 10 is used, but can be adjusted by setting the
 `maxOverridesLength` property:
-
-    var StyleSheet = require('react-style')
-    StyleSheet.maxOverridesLength = 1;
-
+```js
+import StyleSheet from 'react-style'
+StyleSheet.maxOverridesLength = 1;
+```
 Source Maps are supported, but only for the generated JavaScript.
 
 ## Syntax helpers for writing styles
 
 There's [React Style syntax][] which allows you to write styles like this:
-
-    var styles = StyleSheet.create`
-      .foo {
-        color: red;
-        background-color: white;
-      }
-    `
-
+```js
+const styles = StyleSheet.create`
+  .foo {
+    color: red;
+    background-color: white;
+  }
+`
+```
 And have it transformed into:
-
-    var styles = StyleSheet.create({
-      foo: {
-        color: 'red',
-        backgroundColor: 'white'
-      }
-    })
-
+```js
+const styles = StyleSheet.create({
+  foo: {
+    color: 'red',
+    backgroundColor: 'white'
+  }
+})
+```
 This syntax is consistent with [ES6 tagged template literal][es6-templ].
 
 The syntax helpers are convenient when transitioning a large CSS
@@ -93,18 +92,18 @@ Note that we only support classNames of 1 level deep.
 
 ## Support for media queries
 Media queries are supported by React Style with the following syntax:
-
-    var fooStyles = StyleSheet.create({
+```js
+const fooStyles = StyleSheet.create({
+    bar: {
+       color: 'green'
+    },
+    '@media screen and (min-width: 800px)': {
         bar: {
-           color: 'green'
-        },
-        '@media screen and (min-width: 800px)': {
-            bar: {
-                color: 'purple'
-            }
+            color: 'purple'
         }
-    });
-
+    }
+});
+```
 If you want to use media queries inside the `render` function, we recommend
 using `window.matchMedia`.
 
